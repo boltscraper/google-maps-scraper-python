@@ -25,9 +25,11 @@ class ReviewsResource:
             sort: Sort order ('newest', 'most_relevant', 'highest_rating', 'lowest_rating')
         """
         payload = {
+            "query": place_id,
             "place_id": place_id,
             "max_reviews": max_reviews,
-            "sort": sort
+            "sort": sort,
+            "sort_by": sort
         }
         return self._client._request("POST", "/reviews/search", json=payload)
 
@@ -77,4 +79,4 @@ class ReviewsResource:
 
     def stop_job(self, job_id: str) -> Dict[str, Any]:
         """Stop a reviews scraping job."""
-        return self._client._request("POST", f"/reviews/jobs/{job_id}/control")
+        return self._client._request("POST", f"/reviews/jobs/{job_id}/stop")

@@ -103,4 +103,4 @@ class MapsResource:
 
     def stop_job(self, job_id: str) -> Dict[str, Any]:
         """Stop/cancel a scraping job and finalize partial results."""
-        return self._client._request("POST", f"/maps/jobs/{job_id}/control")
+        return self._client._request("POST", f"/maps/jobs/{job_id}/stop")

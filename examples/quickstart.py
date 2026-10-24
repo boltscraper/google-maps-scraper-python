@@ -14,9 +14,9 @@ def main():
     print("Searching Google Maps for 'Coffee shops in Seattle'...")
     results = client.maps.search("Coffee shops in Seattle", page=1)
 
-    pagination = results.get("pagination", {})
-    total = pagination.get("total_results", len(results.get("data", [])))
-    print(f"\nFound {total} places (showing page {pagination.get('page', 1)}):\n")
+    places = results.get("data", [])
+    total = results.get("total_results") or len(places)
+    print(f"\nFound {total} places (showing page {results.get('page', 1)}):\n")
 
     for place in results.get("data", []):
         name = place.get("Name", "N/A")

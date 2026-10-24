@@ -47,12 +47,12 @@ client = BoltScraper(api_key="bs_live_YOUR_API_KEY")
 # 1. Real-time Google Maps search (~2-4 seconds)
 results = client.maps.search("Coffee shops in Seattle", page=1)
 
-print(f"Found {results['pagination']['total_results']} places:")
-for place in results["data"]:
-    print(f"Name:    {place['Name']}")
-    print(f"Phone:   {place['Phone']} ({place['Phone Type']})")
-    print(f"Website: {place['Website']}")
-    print(f"Rating:  {place['Average Rating']} ({place['Review Count']} reviews)")
+print(f"Found {results.get('total_results', len(results.get('data', [])))} places:")
+for place in results.get("data", []):
+    print(f"Name:    {place.get('Name')}")
+    print(f"Phone:   {place.get('Phone')} ({place.get('Phone Type')})")
+    print(f"Website: {place.get('Website')}")
+    print(f"Rating:  {place.get('Average Rating')} ({place.get('Review Count')} reviews)")
     print("-" * 40)
 ```
 
@@ -70,8 +70,8 @@ response = client.maps.search(
     hl="en"
 )
 
-for lead in response["data"]:
-    print(lead["Name"], lead["Full Address"], lead["Coordinates"])
+for lead in response.get("data", []):
+    print(lead.get("Name"), lead.get("Full Address"), lead.get("Coordinates"))
 ```
 
 ### 2. Large-Scale Asynchronous Batch Jobs
@@ -92,7 +92,7 @@ print(f"Started job: {job_id}")
 
 # Check status
 status = client.maps.get_job(job_id)
-print(f"Status: {status['status']} — Extracted: {status['total_leads']} leads")
+print(f"Status: {status.get('status')} — Extracted: {status.get('total_leads', 0)} leads")
 
 # Download CSV dataset upon completion
 csv_bytes = client.maps.download_csv(job_id)
@@ -104,17 +104,20 @@ with open("miami_leads.csv", "wb") as f:
 Bypass Google's 5-review API limitation and extract all customer reviews, ratings, reviewer levels, and owner responses:
 
 ```python
-# Synchronously extract up to 5,000+ reviews for any Google Place ID
+# Synchronously extract customer reviews for any Google Place ID
 reviews_data = client.reviews.search(
     place_id="ChIJb8Jg9q-1RIYRAxvq_mZ0gXY",
     max_reviews=500,
     sort="newest"  # 'newest', 'most_relevant', 'highest_rating', 'lowest_rating'
 )
 
-for review in reviews_data.get("reviews", []):
-    print(f"★ {review['rating']} by {review['reviewer_name']}")
-    print(f"Text: {review['text']}")
-    print(f"Date: {review['date']}")
+reviews = reviews_data.get("data") or reviews_data.get("reviews", [])
+for review in reviews:
+    stars = review.get("stars") or review.get("rating", 0)
+    author = review.get("reviewer", {}).get("name") if isinstance(review.get("reviewer"), dict) else review.get("reviewer_name", "Anonymous")
+    text = review.get("review_text") or review.get("text", "")
+    print(f"★ {stars} by {author}")
+    print(f"Text: {text}")
 ```
 
 ### 4. Website Email & Social Link Enrichment
@@ -122,11 +125,13 @@ Turn raw domain lists into enriched B2B contact lists:
 
 ```python
 # Instant single-domain enrichment (crawls /contact, /about, /team subpages)
-company = client.website.scrape("https://example.com")
+response = client.website.scrape("https://example.com")
+company = response.get("data", response)
 
 print("Direct Emails:", company.get("emails", []))
 print("Phone Numbers:", company.get("phones", []))
-print("Social Links: ", company.get("socials", {}))
+socials = company.get("social_links") or company.get("socials", {})
+print("Social Links: ", socials)
 ```
 
 ### 5. Webhook Signature Verification

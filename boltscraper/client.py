@@ -21,7 +21,7 @@ from .website import WebsiteResource
 from .webhooks import WebhooksResource
 
 DEFAULT_BASE_URL = "https://boltscraper.com/api/v1"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 
 class BoltScraper:

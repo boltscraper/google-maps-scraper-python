@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "boltscraper"
-version = "1.0.0"
+version = "1.0.1"
 description = "Official Python SDK for Bolt Scraper — Extract business leads, reviews, and direct emails from Google Maps and websites without bans."
 readme = "README.md"
 authors = [{ name = "Bolt Scraper Team", email = "support@boltscraper.com" }]

@@ -15,12 +15,14 @@ def main():
 
     for url in domains:
         print(f"\nEnriching website domain: {url}...")
-        info = client.website.scrape(url)
+        res = client.website.scrape(url)
+        info = res.get("data", res)
 
         print(f"Company:      {info.get('title', 'N/A')}")
         print(f"Emails found: {info.get('emails', [])}")
         print(f"Phone lines:  {info.get('phones', [])}")
-        print(f"Socials:      {info.get('socials', {})}")
+        socials = info.get("social_links") or info.get("socials", {})
+        print(f"Socials:      {socials}")
 
 if __name__ == "__main__":
     main()

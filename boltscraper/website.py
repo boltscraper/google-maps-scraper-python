@@ -64,4 +64,4 @@ class WebsiteResource:
 
     def stop_job(self, job_id: str) -> Dict[str, Any]:
         """Stop/cancel a website scraping job."""
-        return self._client._request("POST", f"/website/jobs/{job_id}/control")
+        return self._client._request("POST", f"/website/jobs/{job_id}/stop")
