@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "boltscraper"
+version = "1.0.0"
+description = "Official Python SDK for Bolt Scraper — Extract business leads, reviews, and direct emails from Google Maps and websites without bans."
+readme = "README.md"
+authors = [{ name = "Bolt Scraper Team", email = "support@boltscraper.com" }]
+license = { text = "MIT" }
+keywords = [
+    "google-maps-scraper",
+    "google-maps-api",
+    "lead-generation",
+    "python-scraper",
+    "google-places-api",
+    "email-extractor",
+    "google-reviews-scraper",
+    "local-seo",
+    "b2b-leads",
+    "web-scraping"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12"
+]
+dependencies = [
+    "requests>=2.25.0"
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://boltscraper.com"
+Documentation = "https://boltscraper.com/api/"
+Repository = "https://github.com/boltscraper/google-maps-scraper-python"
+"Bug Tracker" = "https://github.com/boltscraper/google-maps-scraper-python/issues"
+"Free API Key" = "https://app.boltscraper.com"
